@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SteamWrapped
 
-## Getting Started
+Your Steam gaming life in animated slides — Spotify Wrapped style.
 
-First, run the development server:
+## Live site setup
+
+This is a **Next.js** app ready to deploy as a public website.
+
+### 1. Environment variables
+
+Copy `.env.example` to `.env.local` and fill in:
+
+| Variable | Description |
+|----------|-------------|
+| `STEAM_API_KEY` | [Steam Web API key](https://steamcommunity.com/dev/apikey) |
+| `SESSION_SECRET` | Random string, 32+ characters |
+| `NEXT_PUBLIC_APP_URL` | Public URL (e.g. `https://yourdomain.com`) |
+
+### 2. Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Deploy (recommended: Vercel)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push the repo to GitHub
+2. Import the project on [vercel.com](https://vercel.com)
+3. Add the same environment variables in **Project → Settings → Environment Variables**
+4. Set `NEXT_PUBLIC_APP_URL` to your production domain
+5. Deploy
 
-## Learn More
+After deploy, share links look like: `https://yourdomain.com/u/76561198...`
 
-To learn more about Next.js, take a look at the following resources:
+### Demo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Story mode (mock data): `/u/demo`
+- Real profile: paste a SteamID64 or profile URL on the home page
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- Animated Wrapped slides (playtime, top games, achievements, personality, share card)
+- Steam OpenID sign-in (`/api/auth/steam`)
+- PNG export for Discord / social
+- Open Graph previews when sharing `/u/...` links
+- Mobile-friendly tap navigation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Requirements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Target Steam profile must be **public** (profile + game details)
+- Large libraries may take several minutes on first load (cached 24h locally)
+
+## Stack
+
+Next.js 16 · TypeScript · Tailwind CSS 4 · Framer Motion · Steam Web API
+
+## Notes for production
+
+- **Vercel Pro** (or self-hosting) recommended for large profiles — generation can exceed 60s
+- File cache (`.cache/wrapped`) is ephemeral on serverless — profiles regenerate on cold starts
+- Discord/Twitter previews need `NEXT_PUBLIC_APP_URL` set correctly

@@ -1,0 +1,273 @@
+{
+  "meta": {
+    "version": 1,
+    "purpose": "Données fictives pour développer l'UI et les animations sans clé API Steam",
+    "note": "Basé sur playtime_forever (lifetime) — pas de stats par année civile"
+  },
+  "profile": {
+    "steamId": "76561198123456789",
+    "personaName": "NeonPulse_42",
+    "avatarUrl": "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff25dc339c_full.jpg",
+    "profileUrl": "https://steamcommunity.com/id/NeonPulse42",
+    "accountCreated": "2012-03-14",
+    "accountAgeYears": 14,
+    "steamLevel": 47,
+    "communityVisibilityState": 3
+  },
+  "slides": {
+    "intro": {
+      "headline": "This life, you've been hard on your GPU, NeonPulse_42...",
+      "subheadline": "Here's your Steam Wrapped — your whole gaming career, unfiltered."
+    },
+    "playtime": {
+      "totalMinutes": 248760,
+      "totalHours": 4146,
+      "totalDays": 173,
+      "equivalence": "That's 173 full days without touching grass",
+      "rank": "Steam Legend",
+      "counterFrom": 0,
+      "counterTo": 4146,
+      "counterUnit": "heures"
+    },
+    "top1": {
+      "rank": 1,
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "hours": 2847,
+      "playtimePercent": 69,
+      "headerImage": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg",
+      "libraryImage": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/library_600x900.jpg",
+      "genres": ["Action", "FPS"],
+      "conditionalPhrase": "We genuinely hope someone pays you to play this much.",
+      "conditionalRule": "hours > 500"
+    },
+    "podium": [
+      {
+        "rank": 2,
+        "appid": 570,
+        "name": "Dota 2",
+        "hours": 412,
+        "headerImage": "https://cdn.cloudflare.steamstatic.com/steam/apps/570/header.jpg",
+        "barPercent": 100
+      },
+      {
+        "rank": 3,
+        "appid": 1172470,
+        "name": "Apex Legends",
+        "hours": 286,
+        "headerImage": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/header.jpg",
+        "barPercent": 69
+      },
+      {
+        "rank": 4,
+        "appid": 252490,
+        "name": "Rust",
+        "hours": 198,
+        "headerImage": "https://cdn.cloudflare.steamstatic.com/steam/apps/252490/header.jpg",
+        "barPercent": 48
+      },
+      {
+        "rank": 5,
+        "appid": 1091500,
+        "name": "Cyberpunk 2077",
+        "hours": 124,
+        "headerImage": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg",
+        "barPercent": 30
+      }
+    ],
+    "graveyard": {
+      "unplayedCount": 93,
+      "totalOwned": 187,
+      "backlogPercent": 50,
+      "estimatedWastedValueEur": 1840,
+      "headline": "You own 93 games you have NEVER launched. Valve thanks you for the donation.",
+      "sampleUnplayed": [
+        { "appid": 1245620, "name": "ELDEN RING", "priceEur": 59.99 },
+        { "appid": 1145360, "name": "Hades", "priceEur": 24.99 },
+        { "appid": 413150, "name": "Stardew Valley", "priceEur": 13.99 },
+        { "appid": 1593500, "name": "God of War", "priceEur": 49.99 },
+        { "appid": 1817070, "name": "Marvel's Spider-Man Remastered", "priceEur": 59.99 }
+      ]
+    },
+    "archetype": {
+      "id": "exclusif",
+      "title": "The One-Trick",
+      "emoji": "🎯",
+      "description": "69% of your playtime on a single title. The other games? Decor.",
+      "traits": [
+        "One main, one religion",
+        "Collects skins, not games",
+        "The backlog is for other people"
+      ],
+      "badgeColor": "#66c0f4",
+      "matchedRules": ["topGameSharePercent > 65"]
+    },
+    "allArchetypes": [
+      {
+        "id": "exclusif",
+        "title": "L'Exclusif",
+        "emoji": "🎯",
+        "rule": ">65% du temps total sur un seul jeu"
+      },
+      {
+        "id": "collectionneur",
+        "title": "Le Collectionneur",
+        "emoji": "📦",
+        "rule": "150+ jeux possédés, moins de 10 joués"
+      },
+      {
+        "id": "hyperactif",
+        "title": "L'Hyperactif",
+        "emoji": "⚡",
+        "rule": "25+ jeux différents lancés"
+      },
+      {
+        "id": "pilier",
+        "title": "Le Pilier de Bar",
+        "emoji": "🍺",
+        "rule": "Compte Steam créé il y a plus de 10 ans"
+      }
+    ]
+  },
+  "shareCard": {
+    "format": "9:16",
+    "width": 1080,
+    "height": 1920,
+    "title": "SteamWrapped 2026",
+    "subtitle": "NeonPulse_42 · 4,146h total",
+    "top3": [
+      { "rank": 1, "name": "Counter-Strike 2", "hours": 2847 },
+      { "rank": 2, "name": "Dota 2", "hours": 412 },
+      { "rank": 3, "name": "Apex Legends", "hours": 286 }
+    ],
+    "archetype": "The One-Trick",
+    "archetypeEmoji": "🎯",
+    "footerUrl": "steamwrapped.app"
+  },
+  "loadingMessages": [
+    "Calculating time spent AFK in menus...",
+    "Negotiating with Valve servers...",
+    "Finding that sale game you never played...",
+    "Scanning your library since 2012...",
+    "Counting achievements nobody has ever unlocked...",
+    "Checking if you touched grass (spoiler: no)..."
+  ],
+  "api": {
+    "playerSummary": {
+      "steamid": "76561198123456789",
+      "personaname": "NeonPulse_42",
+      "profileurl": "https://steamcommunity.com/id/NeonPulse42",
+      "avatar": "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff25dc339c.jpg",
+      "avatarmedium": "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff25dc339c_medium.jpg",
+      "avatarfull": "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff25dc339c_full.jpg",
+      "personastate": 1,
+      "communityvisibilitystate": 3,
+      "profilestate": 1,
+      "lastlogoff": 1718745600,
+      "timecreated": 1331683200
+    },
+    "steamLevel": 47,
+    "ownedGames": [
+      {
+        "appid": 730,
+        "name": "Counter-Strike 2",
+        "playtime_forever": 170820,
+        "playtime_2weeks": 1240,
+        "rtime_last_played": 1718745600,
+        "img_icon_url": "2f591126c421c4df0196bc5340b5d8e5111628.png",
+        "img_logo_url": "2f591126c421c4df0196bc5340b5d8e5111628.png"
+      },
+      {
+        "appid": 570,
+        "name": "Dota 2",
+        "playtime_forever": 24720,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1717200000,
+        "img_icon_url": "0bbb630d6322dd79d9727c7887364e90.png",
+        "img_logo_url": "0bbb630d6322dd79d9727c7887364e90.png"
+      },
+      {
+        "appid": 1172470,
+        "name": "Apex Legends",
+        "playtime_forever": 17160,
+        "playtime_2weeks": 180,
+        "rtime_last_played": 1718600000,
+        "img_icon_url": "2311a1524c7b8580a215a2b4556b2c7c.png",
+        "img_logo_url": "2311a1524c7b8580a215a2b4556b2c7c.png"
+      },
+      {
+        "appid": 252490,
+        "name": "Rust",
+        "playtime_forever": 11880,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1700000000,
+        "img_icon_url": "0d50182040a3dbe785540571e36e3b92.png",
+        "img_logo_url": "0d50182040a3dbe785540571e36e3b92.png"
+      },
+      {
+        "appid": 1091500,
+        "name": "Cyberpunk 2077",
+        "playtime_forever": 7440,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1695000000,
+        "img_icon_url": "4c4a0909e3467b0f685f661e171cc93f.png",
+        "img_logo_url": "4c4a0909e3467b0f685f661e171cc93f.png"
+      },
+      {
+        "appid": 1245620,
+        "name": "ELDEN RING",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "img_icon_url": "b7a7a5828c8a4e4e8c4c4c4c4c4c4c4c.png",
+        "img_logo_url": "b7a7a5828c8a4e4e8c4c4c4c4c4c4c4c.png"
+      },
+      {
+        "appid": 1145360,
+        "name": "Hades",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "img_icon_url": "a1b2c3d4e5f6789012345678abcdef01.png",
+        "img_logo_url": "a1b2c3d4e5f6789012345678abcdef01.png"
+      },
+      {
+        "appid": 413150,
+        "name": "Stardew Valley",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "img_icon_url": "c3d4e5f6789012345678901234567890.png",
+        "img_logo_url": "c3d4e5f6789012345678901234567890.png"
+      },
+      {
+        "appid": 1593500,
+        "name": "God of War",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "img_icon_url": "d4e5f678901234567890123456789012.png",
+        "img_logo_url": "d4e5f678901234567890123456789012.png"
+      },
+      {
+        "appid": 1817070,
+        "name": "Marvel's Spider-Man Remastered",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "img_icon_url": "e5f67890123456789012345678901234.png",
+        "img_logo_url": "e5f67890123456789012345678901234.png"
+      }
+    ],
+    "gameCount": 187
+  },
+  "errors": {
+    "privateProfile": {
+      "code": "PROFILE_PRIVATE",
+      "message": "Ce profil Steam est privé. Passe ton profil et tes détails de jeux en Public dans les paramètres Steam."
+    },
+    "notFound": {
+      "code": "PROFILE_NOT_FOUND",
+      "message": "Profil introuvable. Vérifie ton SteamID64 ou ton URL personnalisée."
+    },
+    "missingApiKey": {
+      "code": "MISSING_API_KEY",
+      "message": "Clé API Steam absente côté serveur. Contacte l'administrateur."
+    }
+  }
+}
