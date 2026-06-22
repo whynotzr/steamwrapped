@@ -3,7 +3,7 @@ import { resolveSteamId } from "@/lib/steam/resolve";
 import { getWrapped } from "@/lib/wrapped/get-wrapped";
 import { getSession } from "@/lib/session";
 
-export const maxDuration = 600;
+export const maxDuration = 300;
 
 export async function GET(request: NextRequest) {
   const session = await getSession();
