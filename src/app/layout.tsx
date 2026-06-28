@@ -23,15 +23,36 @@ export const metadata: Metadata = {
       }
     : {}),
   title: {
-    default: "SteamWrapped — Your gaming life, exposed",
+    default: "SteamWrapped - Your gaming life, exposed",
     template: "%s | SteamWrapped",
   },
   description:
     "Generate your Steam Wrapped in one click: lifetime playtime, top games, gaming archetype, and a shareable PNG card.",
+  keywords: [
+    "Steam Wrapped",
+    "SteamWrapped",
+    "Steam stats",
+    "Steam recap",
+    "gaming wrapped",
+    "Steam profile stats",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "SteamWrapped",
-    title: "SteamWrapped — Your gaming life, exposed",
+    title: "SteamWrapped - Your gaming life, exposed",
     description:
       "Spotify Wrapped-style animated slides. Paste your SteamID64 or profile URL.",
     locale: "en_US",
@@ -53,7 +74,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#171a21] text-white">
+      <body className="min-h-full flex flex-col bg-[#070a11] text-white">
         {children}
       </body>
     </html>

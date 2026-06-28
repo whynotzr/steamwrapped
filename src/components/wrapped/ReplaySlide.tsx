@@ -58,7 +58,7 @@ export function ReplaySlide({
           align === "center" ? "justify-center" : "justify-start"
         }`}
       >
-        <div className="relative mx-auto w-full max-w-lg">{children}</div>
+        <div className="relative mx-auto w-full max-w-2xl">{children}</div>
       </div>
     </motion.div>
   );
@@ -77,7 +77,7 @@ export function ReplaySectionTitle({
         initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="text-2xl font-black tracking-tight text-white sm:text-3xl"
+        className="text-3xl font-black tracking-tight text-white sm:text-4xl"
       >
         {children}
       </motion.h2>
@@ -86,7 +86,7 @@ export function ReplaySectionTitle({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.15 }}
-          className="mt-2 text-sm leading-relaxed text-white/45"
+          className="mt-2 max-w-xl text-sm leading-relaxed text-white/50"
         >
           {subtitle}
         </motion.p>
@@ -101,7 +101,7 @@ export function ReplayHeroTitle({ children }: { children: ReactNode }) {
       initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="text-center text-4xl font-black uppercase tracking-tight text-shimmer-gold sm:text-5xl md:text-6xl"
+      className="text-center text-5xl font-black uppercase tracking-tight text-shimmer-gold sm:text-6xl md:text-7xl"
     >
       {children}
     </motion.h1>
@@ -114,7 +114,7 @@ export function ReplayIntroText({ children }: { children: ReactNode }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.45 }}
-      className="mx-auto mt-4 max-w-md text-center text-sm leading-relaxed text-white/50"
+      className="mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-white/55 sm:text-base"
     >
       {children}
     </motion.p>

@@ -124,7 +124,7 @@ function buildWowMoment(
   const topShare = data.extras.topGameSharePercent;
   const bestCompare = [...comparisons].sort((a, b) => b.ratio - a.ratio)[0];
 
-  let powerScore = Math.min(
+  const powerScore = Math.min(
     100,
     Math.round(
       Math.log10(Math.max(ach, 1)) * 10 +

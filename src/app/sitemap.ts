@@ -3,8 +3,19 @@ import { getSiteUrl } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
+  const now = new Date();
   return [
-    { url: base, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/u/demo`, changeFrequency: "monthly", priority: 0.8 },
+    {
+      url: base,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    {
+      url: `${base}/u/demo`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 }

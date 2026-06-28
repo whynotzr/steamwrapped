@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --steam-bg: #0a0510;
-  --steam-panel: #1a1020;
+  --steam-bg: #070a11;
+  --steam-panel: #0d1621;
   --steam-blue: #66c0f4;
   --steam-blue-dim: #4a9fd4;
   --steam-glow: rgba(102, 192, 244, 0.35);
@@ -28,7 +28,12 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Grain cinématique */
+::selection {
+  background: rgba(92, 225, 230, 0.28);
+  color: white;
+}
+
+/* Cinematic grain */
 .grain::after {
   content: "";
   position: fixed;
@@ -101,12 +106,12 @@ body {
   pointer-events: none;
 }
 
-/* ─── Steam Replay visual system ─── */
+/* Steam Replay visual system */
 
 .replay-card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 8px;
   backdrop-filter: blur(16px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
@@ -172,7 +177,7 @@ body {
   );
 }
 
-/* ─── WOW effects ─── */
+/* WOW effects */
 
 .wow-orb {
   position: absolute;
@@ -280,7 +285,7 @@ body {
     rgba(255, 255, 255, 0.02) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  border-radius: 8px;
   backdrop-filter: blur(20px);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04) inset,
@@ -344,3 +349,4 @@ body {
   background: linear-gradient(90deg, #5ce1e6, #ffc857, #ff6b9d);
   box-shadow: 0 0 20px rgba(92, 225, 230, 0.5);
 }
+

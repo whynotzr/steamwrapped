@@ -26,9 +26,7 @@ export function SteamLookup() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `/api/resolve?q=${encodeURIComponent(trimmed)}`
-      );
+      const res = await fetch(`/api/resolve?q=${encodeURIComponent(trimmed)}`);
       const body = await res.json();
       if (!res.ok) throw new Error(body.error ?? "Profile not found");
       router.push(`/u/${body.steamId}`);
@@ -45,12 +43,15 @@ export function SteamLookup() {
           SteamID64 or Steam profile URL
         </label>
         <div
-          className={`relative rounded-2xl transition-all duration-300 ${
+          className={`relative rounded-xl transition-all duration-300 ${
             focused
-              ? "shadow-[0_0_0_2px_rgba(102,192,244,0.45),0_0_32px_rgba(102,192,244,0.12)]"
+              ? "shadow-[0_0_0_2px_rgba(92,225,230,0.48),0_0_42px_rgba(92,225,230,0.16)]"
               : ""
           }`}
         >
+          <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/30">
+            @
+          </span>
           <input
             id="steam-input"
             type="text"
@@ -58,8 +59,8 @@ export function SteamLookup() {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
-            placeholder="SteamID64 or URL (steamcommunity.com/id/...)"
-            className="w-full rounded-2xl border border-white/10 bg-[#171a21]/90 px-5 py-4 text-base text-white placeholder:text-white/30 outline-none transition"
+            placeholder="SteamID64, vanity name, or profile URL"
+            className="w-full rounded-xl border border-white/10 bg-[#071018]/88 px-10 py-4 text-base text-white placeholder:text-white/30 outline-none transition"
             autoComplete="off"
             spellCheck={false}
             disabled={loading}
@@ -72,7 +73,7 @@ export function SteamLookup() {
         disabled={loading || !query.trim()}
         whileHover={{ scale: loading ? 1 : 1.01 }}
         whileTap={{ scale: loading ? 1 : 0.98 }}
-        className="relative w-full overflow-hidden rounded-2xl bg-[#66c0f4] py-4 text-base font-black text-[#171a21] shadow-[0_0_28px_rgba(102,192,244,0.35)] transition disabled:cursor-not-allowed disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl bg-[#5ce1e6] py-4 text-base font-black text-[#061015] shadow-[0_0_34px_rgba(92,225,230,0.34)] transition before:absolute before:inset-y-0 before:left-[-45%] before:w-1/3 before:skew-x-[-18deg] before:bg-white/35 before:blur-md before:transition before:duration-700 hover:before:left-[115%] disabled:cursor-not-allowed disabled:opacity-40"
       >
         {loading ? (
           <span className="inline-flex items-center justify-center gap-3">
@@ -88,7 +89,7 @@ export function SteamLookup() {
         <motion.p
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-300"
+          className="rounded-lg border border-red-500/25 bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-300"
           role="alert"
         >
           {error}
@@ -104,7 +105,7 @@ export function SteamLookup() {
         >
           SteamID64
         </button>
-        {" · "}
+        {" / "}
         <button
           type="button"
           onClick={() => setQuery("https://steamcommunity.com/id/GabeN")}
@@ -112,7 +113,7 @@ export function SteamLookup() {
         >
           profile URL
         </button>
-        {" · "}
+        {" / "}
         <button
           type="button"
           onClick={() => setQuery("demo")}

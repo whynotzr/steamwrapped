@@ -128,7 +128,7 @@ function parseShowcaseStatsFromHtml(html: string): ProfileShowcaseStats {
   return { totalAchievements, perfectGames, perfectAchievements };
 }
 
-let profileHtmlCache = new Map<string, Promise<string | null>>();
+const profileHtmlCache = new Map<string, Promise<string | null>>();
 
 function fetchProfileHtmlCached(steamId: string): Promise<string | null> {
   let pending = profileHtmlCache.get(steamId);

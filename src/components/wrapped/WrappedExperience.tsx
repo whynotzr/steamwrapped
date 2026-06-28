@@ -90,8 +90,9 @@ export function WrappedExperience({ steamId }: WrappedExperienceProps) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [slide, setSlide] = useState(0);
-  const [shareUrl, setShareUrl] = useState("");
   const [flash, setFlash] = useState(0);
+  const shareUrl =
+    typeof window === "undefined" ? "" : `${window.location.origin}/u/${steamId}`;
 
   const spotlightCount = data?.replay.gameSpotlights.length ?? 3;
   const totalSlides = 8 + spotlightCount + TAIL_SLIDES;
@@ -145,17 +146,13 @@ export function WrappedExperience({ steamId }: WrappedExperienceProps) {
   );
 
   useEffect(() => {
-    setShareUrl(`${window.location.origin}/u/${steamId}`);
-  }, [steamId]);
-
-  useEffect(() => {
-    loadWrapped();
+    queueMicrotask(() => loadWrapped());
   }, [loadWrapped]);
 
   useEffect(() => {
     const wowSlides = [idx.flex, idx.achievements, idx.summary];
     if (wowSlides.includes(slide)) {
-      setFlash((f) => f + 1);
+      queueMicrotask(() => setFlash((f) => f + 1));
     }
   }, [slide, idx.flex, idx.achievements, idx.summary]);
 
