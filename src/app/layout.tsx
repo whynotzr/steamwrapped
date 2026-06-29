@@ -23,11 +23,11 @@ export const metadata: Metadata = {
       }
     : {}),
   title: {
-    default: "SteamWrapped - Your gaming life, exposed",
+    default: "Steam Wrapped - Your gaming life, exposed",
     template: "%s | SteamWrapped",
   },
   description:
-    "Generate your Steam Wrapped in one click: lifetime playtime, top games, gaming archetype, and a shareable PNG card.",
+    "Create your Steam Wrapped in one click: lifetime Steam stats, top games, gaming archetype, achievements, and a shareable PNG card.",
   keywords: [
     "Steam Wrapped",
     "SteamWrapped",
@@ -52,15 +52,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "SteamWrapped",
-    title: "SteamWrapped - Your gaming life, exposed",
+    title: "Steam Wrapped - Your gaming life, exposed",
     description:
-      "Spotify Wrapped-style animated slides. Paste your SteamID64 or profile URL.",
+      "Create Spotify Wrapped-style Steam slides. Paste your SteamID64 or profile URL.",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SteamWrapped",
-    description: "Your Steam gaming life in animated slides.",
+    title: "Steam Wrapped",
+    description: "Create your Steam gaming recap in animated slides.",
   },
 };
 
