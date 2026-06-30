@@ -1,8 +1,9 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
+import os from "os";
 import path from "path";
 import type { WrappedData } from "@/types/wrapped";
 
-const CACHE_DIR = path.join(process.cwd(), ".cache", "wrapped");
+const CACHE_DIR = path.join(os.tmpdir(), "steamwrapped-cache", "wrapped");
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
 interface CacheEntry {
@@ -32,7 +33,11 @@ export async function setCachedWrapped(
   steamId: string,
   data: WrappedData
 ): Promise<void> {
-  await mkdir(CACHE_DIR, { recursive: true });
-  const entry: CacheEntry = { cachedAt: new Date().toISOString(), data };
-  await writeFile(cachePath(steamId), JSON.stringify(entry), "utf-8");
+  try {
+    await mkdir(CACHE_DIR, { recursive: true });
+    const entry: CacheEntry = { cachedAt: new Date().toISOString(), data };
+    await writeFile(cachePath(steamId), JSON.stringify(entry), "utf-8");
+  } catch {
+    // Cache writes are best-effort on serverless runtimes.
+  }
 }
