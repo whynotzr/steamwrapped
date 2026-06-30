@@ -9,6 +9,8 @@ import type {
 
 const STEAM_API = "https://api.steampowered.com";
 const STORE_API = "https://store.steampowered.com/api/appdetails";
+const DEFAULT_TIMEOUT_MS = 12000;
+const MAX_RETRIES = 2;
 
 function getApiKey(): string {
   const key = process.env.STEAM_API_KEY;
@@ -16,12 +18,55 @@ function getApiKey(): string {
   return key;
 }
 
-async function steamFetch<T>(url: string): Promise<T> {
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) {
-    throw new Error(`Steam API error: ${res.status} (GET ${url.split("?")[0]})`);
+function wait(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isRetryableStatus(status: number): boolean {
+  return status === 408 || status === 425 || status === 429 || status >= 500;
+}
+
+async function steamFetch<T>(
+  url: string,
+  {
+    timeoutMs = DEFAULT_TIMEOUT_MS,
+    retries = MAX_RETRIES,
+  }: { timeoutMs?: number; retries?: number } = {}
+): Promise<T> {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const res = await fetch(url, {
+        cache: "no-store",
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        if (attempt < retries && isRetryableStatus(res.status)) {
+          await wait(350 * (attempt + 1));
+          continue;
+        }
+        throw new Error(
+          `Steam API error: ${res.status} (GET ${url.split("?")[0]})`
+        );
+      }
+
+      return res.json() as Promise<T>;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= retries) break;
+      await wait(350 * (attempt + 1));
+    } finally {
+      clearTimeout(timeout);
+    }
   }
-  return res.json() as Promise<T>;
+
+  if (lastError instanceof Error) throw lastError;
+  throw new Error(`Steam API error (GET ${url.split("?")[0]})`);
 }
 
 export async function resolveVanityUrl(vanityUrl: string): Promise<string> {
@@ -29,7 +74,7 @@ export async function resolveVanityUrl(vanityUrl: string): Promise<string> {
   const data = await steamFetch<{
     response: { success: number; steamid?: string; message?: string };
   }>(
-    `${STEAM_API}/ISteamUser/ResolveVanityURL/v0001/?key=${key}&vanityurl=${encodeURIComponent(vanityUrl)}`
+    `${STEAM_API}/ISteamUser/ResolveVanityURL/v0001/?key=${encodeURIComponent(key)}&vanityurl=${encodeURIComponent(vanityUrl)}`
   );
 
   if (data.response.success !== 1 || !data.response.steamid) {
@@ -46,7 +91,7 @@ export async function getPlayerSummary(
   const data = await steamFetch<{
     response: { players: SteamPlayerSummary[] };
   }>(
-    `${STEAM_API}/ISteamUser/GetPlayerSummaries/v2/?key=${key}&steamids=${steamId}`
+    `${STEAM_API}/ISteamUser/GetPlayerSummaries/v2/?key=${encodeURIComponent(key)}&steamids=${encodeURIComponent(steamId)}`
   );
   return data.response.players[0] ?? null;
 }
@@ -56,7 +101,7 @@ export async function getOwnedGames(steamId: string): Promise<SteamOwnedGame[]> 
   const data = await steamFetch<{
     response: { game_count: number; games?: SteamOwnedGame[] };
   }>(
-    `${STEAM_API}/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamId}&include_appinfo=1&include_played_free_games=1&skip_unvetted_apps=false`
+    `${STEAM_API}/IPlayerService/GetOwnedGames/v1/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(steamId)}&include_appinfo=1&include_played_free_games=1&skip_unvetted_apps=false`
   );
   return data.response.games ?? [];
 }
@@ -64,7 +109,7 @@ export async function getOwnedGames(steamId: string): Promise<SteamOwnedGame[]> 
 export async function getSteamLevel(steamId: string): Promise<number> {
   const key = getApiKey();
   const data = await steamFetch<{ response: { player_level: number } }>(
-    `${STEAM_API}/IPlayerService/GetSteamLevel/v1/?key=${key}&steamid=${steamId}`
+    `${STEAM_API}/IPlayerService/GetSteamLevel/v1/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(steamId)}`
   );
   return data.response.player_level;
 }
@@ -73,7 +118,9 @@ export async function getBadges(steamId: string): Promise<SteamBadge[]> {
   const key = getApiKey();
   const data = await steamFetch<{
     response: { badges?: SteamBadge[] };
-  }>(`${STEAM_API}/IPlayerService/GetBadges/v1/?key=${key}&steamid=${steamId}`);
+  }>(
+    `${STEAM_API}/IPlayerService/GetBadges/v1/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(steamId)}`
+  );
   return data.response.badges ?? [];
 }
 
@@ -85,7 +132,7 @@ export async function getRecentlyPlayedGames(
   const data = await steamFetch<{
     response: { total_count?: number; games?: SteamOwnedGame[] };
   }>(
-    `${STEAM_API}/IPlayerService/GetRecentlyPlayedGames/v1/?key=${key}&steamid=${steamId}&count=${count}`
+    `${STEAM_API}/IPlayerService/GetRecentlyPlayedGames/v1/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(steamId)}&count=${count}`
   );
   return data.response.games ?? [];
 }
@@ -105,7 +152,7 @@ export async function getPlayerAchievements(
       achievements?: SteamAchievement[];
     };
   }>(
-    `${STEAM_API}/ISteamUserStats/GetPlayerAchievements/v1/?key=${key}&steamid=${steamId}&appid=${appId}`
+    `${STEAM_API}/ISteamUserStats/GetPlayerAchievements/v1/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(steamId)}&appid=${appId}`
   );
   const stats = data.playerstats;
   return {
@@ -129,7 +176,7 @@ export async function getUserStatsForGame(
       achievements?: SteamAchievement[];
     };
   }>(
-    `${STEAM_API}/ISteamUserStats/GetUserStatsForGame/v2/?key=${key}&steamid=${steamId}&appid=${appId}`
+    `${STEAM_API}/ISteamUserStats/GetUserStatsForGame/v2/?key=${encodeURIComponent(key)}&steamid=${encodeURIComponent(steamId)}&appid=${appId}`
   );
   return data.playerstats ?? null;
 }
@@ -145,7 +192,7 @@ export async function getAchievementSchema(
       };
     };
   }>(
-    `${STEAM_API}/ISteamUserStats/GetSchemaForGame/v2/?key=${key}&appid=${appId}`
+    `${STEAM_API}/ISteamUserStats/GetSchemaForGame/v2/?key=${encodeURIComponent(key)}&appid=${appId}`
   );
   return data.game?.availableGameStats?.achievements ?? [];
 }

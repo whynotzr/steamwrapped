@@ -35,7 +35,7 @@ function isBrokenCache(data: WrappedData): boolean {
     return true;
   }
 
-  if ((data.statsVersion ?? 1) < 10) {
+  if ((data.statsVersion ?? 1) < 11) {
     return true;
   }
 
@@ -48,6 +48,10 @@ function isBrokenCache(data: WrappedData): boolean {
   }
 
   if (data.achievements.completionScannedCount === undefined) {
+    return true;
+  }
+
+  if (!data.replay.libraryRecords) {
     return true;
   }
 

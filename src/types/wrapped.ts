@@ -149,6 +149,34 @@ export interface ReplayData {
     punchline: string;
     powerScore: number;
   };
+  libraryRecords: {
+    topGameHours: number;
+    topGameName: string;
+    oldestGame?: {
+      appid: number;
+      name: string;
+      year: number;
+      headerImage?: string;
+    };
+    newestGame?: {
+      appid: number;
+      name: string;
+      year: number;
+      headerImage?: string;
+    };
+    mostRecentGame?: {
+      appid: number;
+      name: string;
+      lastPlayed: string;
+      headerImage?: string;
+    };
+    mostExpensiveBacklog?: {
+      appid: number;
+      name: string;
+      price: number;
+      headerImage?: string;
+    };
+  };
 }
 
 export interface WrappedData {
@@ -206,6 +234,8 @@ export interface WrappedData {
     mostActiveMonth: string;
     mostActiveMonthCount: number;
     badgesEarned: number;
+    gamesPlayedLastTwoWeeks: number;
+    minutesLastTwoWeeks: number;
   };
   personality: GamingPersonality;
   insights: WrappedInsight[];

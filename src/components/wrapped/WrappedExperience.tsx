@@ -29,6 +29,7 @@ import {
   EraDonut,
   GameDeepDive,
   GenreRadar,
+  LibraryRecords,
   MonthlyBars,
   WorkshopShowcase,
 } from "./ReplayVisuals";
@@ -42,7 +43,7 @@ import {
   useWowPulse,
 } from "./WowEffects";
 
-const TAIL_SLIDES = 8;
+const TAIL_SLIDES = 9;
 
 function formatHours(h: number): string {
   return h.toLocaleString(LOCALE);
@@ -115,10 +116,11 @@ export function WrappedExperience({ steamId }: WrappedExperienceProps) {
       completed: afterSpot + 1,
       rare: afterSpot + 2,
       workshop: afterSpot + 3,
-      personality: afterSpot + 4,
-      roast: afterSpot + 5,
-      summary: afterSpot + 6,
-      share: afterSpot + 7,
+      records: afterSpot + 4,
+      personality: afterSpot + 5,
+      roast: afterSpot + 6,
+      summary: afterSpot + 7,
+      share: afterSpot + 8,
     };
   }, [spotlightCount]);
 
@@ -534,6 +536,27 @@ export function WrappedExperience({ steamId }: WrappedExperienceProps) {
               Your Workshop
             </ReplaySectionTitle>
             <WorkshopShowcase workshop={data.workshop} />
+          </ReplaySlide>
+        )}
+
+        {slide === idx.records && (
+          <ReplaySlide key="records" intense mosaic={replay.coverMosaic}>
+            <ReplaySectionTitle subtitle="The odd little records hiding inside your Steam library.">
+              Library records
+            </ReplaySectionTitle>
+            <LibraryRecords records={replay.libraryRecords} />
+            <div className="replay-card-wow mt-4 p-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-white/40">
+                Recent pulse
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
+                {data.activity.gamesPlayedLastTwoWeeks > 0
+                  ? `${data.activity.gamesPlayedLastTwoWeeks} games played in the last 2 weeks / ${Math.round(
+                      data.activity.minutesLastTwoWeeks / 60
+                    ).toLocaleString(LOCALE)}h logged recently.`
+                  : "No recent two-week activity detected, but the lifetime archive still speaks."}
+              </p>
+            </div>
           </ReplaySlide>
         )}
 

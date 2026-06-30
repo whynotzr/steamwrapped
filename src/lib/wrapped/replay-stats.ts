@@ -266,6 +266,22 @@ export function computeReplayData(
         label: "Active games (12 months)",
         value: data.activity.recentlyPlayedGames,
       },
+      {
+        label: "Active games (2 weeks)",
+        value: data.activity.gamesPlayedLastTwoWeeks,
+      },
+      {
+        label: "Recent hours",
+        value: Math.round(data.activity.minutesLastTwoWeeks / 60),
+      },
+      {
+        label: "Library value",
+        value: data.library.estimatedLibraryValue,
+      },
+      {
+        label: "Backlog value",
+        value: data.library.estimatedBacklogValue,
+      },
     ],
     monthlyActivity: {
       months: monthlyActivity.months,
@@ -283,5 +299,9 @@ export function computeReplayData(
       unplayedGames: data.library.unplayedGames,
     },
     wowMoment: buildWowMoment(data, comparisons),
+    libraryRecords: {
+      topGameHours: topGames[0] ? playtimeHours(topGames[0].playtime_forever) : 0,
+      topGameName: topGames[0]?.name ?? "Unknown",
+    },
   };
 }

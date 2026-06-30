@@ -25,6 +25,7 @@ import type {
   GameWithMeta,
   GenreStat,
   GamingPersonality,
+  ReplayData,
   WrappedData,
   WrappedInsight,
 } from "@/types/wrapped";
@@ -337,6 +338,73 @@ function buildUniqueFacts(
   return facts;
 }
 
+function buildLibraryRecords(
+  topGames: GameWithMeta[],
+  enrichedGames: GameWithMeta[],
+  recentlyPlayed: SteamOwnedGame[],
+  allGameNames: Map<number, string>
+): ReplayData["libraryRecords"] {
+  const released = enrichedGames.filter(
+    (g) => typeof g.releaseYear === "number"
+  );
+  const oldest = [...released].sort(
+    (a, b) => (a.releaseYear ?? 9999) - (b.releaseYear ?? 9999)
+  )[0];
+  const newest = [...released].sort(
+    (a, b) => (b.releaseYear ?? 0) - (a.releaseYear ?? 0)
+  )[0];
+  const mostRecentRaw = [...recentlyPlayed].sort(
+    (a, b) => (b.rtime_last_played ?? 0) - (a.rtime_last_played ?? 0)
+  )[0];
+  const mostRecentMeta = mostRecentRaw
+    ? enrichedGames.find((g) => g.appid === mostRecentRaw.appid)
+    : undefined;
+  const mostExpensiveBacklog = enrichedGames
+    .filter((g) => g.playtime_forever === 0 && (g.priceEstimate ?? 0) > 0)
+    .sort((a, b) => (b.priceEstimate ?? 0) - (a.priceEstimate ?? 0))[0];
+
+  return {
+    topGameHours: topGames[0] ? playtimeHours(topGames[0].playtime_forever) : 0,
+    topGameName: topGames[0]?.name ?? "Unknown",
+    oldestGame: oldest?.releaseYear
+      ? {
+          appid: oldest.appid,
+          name: oldest.name,
+          year: oldest.releaseYear,
+          headerImage: oldest.headerImage,
+        }
+      : undefined,
+    newestGame: newest?.releaseYear
+      ? {
+          appid: newest.appid,
+          name: newest.name,
+          year: newest.releaseYear,
+          headerImage: newest.headerImage,
+        }
+      : undefined,
+    mostRecentGame:
+      mostRecentRaw && mostRecentRaw.rtime_last_played
+        ? {
+            appid: mostRecentRaw.appid,
+            name:
+              allGameNames.get(mostRecentRaw.appid) ??
+              mostRecentRaw.name ??
+              "Unknown game",
+            lastPlayed: formatDate(mostRecentRaw.rtime_last_played),
+            headerImage: mostRecentMeta?.headerImage,
+          }
+        : undefined,
+    mostExpensiveBacklog: mostExpensiveBacklog
+      ? {
+          appid: mostExpensiveBacklog.appid,
+          name: mostExpensiveBacklog.name,
+          price: Math.round(mostExpensiveBacklog.priceEstimate ?? 0),
+          headerImage: mostExpensiveBacklog.headerImage,
+        }
+      : undefined,
+  };
+}
+
 export async function generateWrapped(steamId: string): Promise<WrappedData> {
   const [profile, games, level, badges] = await Promise.all([
     getPlayerSummary(steamId),
@@ -363,10 +431,6 @@ export async function generateWrapped(steamId: string): Promise<WrappedData> {
     (a, b) => b.playtime_forever - a.playtime_forever
   );
 
-  const gamesForRare = playedSorted.map((g) => ({
-    appid: g.appid,
-    name: g.name,
-  }));
   const allGamesSorted = [...games].sort(
     (a, b) => b.playtime_forever - a.playtime_forever
   );
@@ -423,6 +487,13 @@ export async function generateWrapped(steamId: string): Promise<WrappedData> {
   const twelveMonthsAgo = Date.now() / 1000 - 365 * 24 * 3600;
   const recentlyPlayed = games.filter(
     (g) => g.rtime_last_played && g.rtime_last_played >= twelveMonthsAgo
+  );
+  const gamesPlayedLastTwoWeeks = games.filter(
+    (g) => (g.playtime_2weeks ?? 0) > 0
+  );
+  const minutesLastTwoWeeks = gamesPlayedLastTwoWeeks.reduce(
+    (sum, game) => sum + (game.playtime_2weeks ?? 0),
+    0
   );
 
   const devByAppId = new Map(
@@ -532,7 +603,7 @@ export async function generateWrapped(steamId: string): Promise<WrappedData> {
   };
 
   const baseData = {
-    statsVersion: 10,
+    statsVersion: 11,
     generatedAt: new Date().toISOString(),
     profile: {
       steamId,
@@ -554,6 +625,8 @@ export async function generateWrapped(steamId: string): Promise<WrappedData> {
       mostActiveMonth: monthlyActivity.peakMonth,
       mostActiveMonthCount: monthlyActivity.peakCount,
       badgesEarned: badges.length,
+      gamesPlayedLastTwoWeeks: gamesPlayedLastTwoWeeks.length,
+      minutesLastTwoWeeks,
     },
     personality,
     insights,
@@ -571,6 +644,13 @@ export async function generateWrapped(steamId: string): Promise<WrappedData> {
     releaseYearByAppId,
     topGames,
     monthlyActivity
+  );
+
+  replay.libraryRecords = buildLibraryRecords(
+    topGames,
+    [...enrichedPlayed, ...enrichedUnplayed],
+    recentlyPlayed,
+    allGameNames
   );
 
   return { ...baseData, replay };

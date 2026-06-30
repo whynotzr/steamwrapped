@@ -364,6 +364,100 @@ export function ByTheNumbers({
 
 /* ─── Monthly bar chart ─── */
 
+function RecordTile({
+  label,
+  title,
+  detail,
+  image,
+  index,
+}: {
+  label: string;
+  title: string;
+  detail: string;
+  image?: string;
+  index: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay: 0.08 * index, type: "spring", stiffness: 180 }}
+      className="replay-card-wow relative min-h-[132px] overflow-hidden p-4"
+    >
+      {image && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={image}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-25"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20" />
+      <ShineOverlay />
+      <div className="relative flex h-full flex-col justify-end">
+        <p className="text-[10px] font-black uppercase tracking-[0.26em] text-[#5ce1e6]">
+          {label}
+        </p>
+        <p className="mt-2 line-clamp-2 text-lg font-black leading-tight text-white">
+          {title}
+        </p>
+        <p className="mt-1 text-xs text-white/50">{detail}</p>
+      </div>
+    </motion.div>
+  );
+}
+
+export function LibraryRecords({
+  records,
+}: {
+  records: ReplayData["libraryRecords"];
+}) {
+  const tiles = [
+    {
+      label: "Time sink",
+      title: records.topGameName,
+      detail: `${records.topGameHours.toLocaleString(LOCALE)}h in your #1 game`,
+    },
+    records.oldestGame && {
+      label: "Old soul",
+      title: records.oldestGame.name,
+      detail: `Released in ${records.oldestGame.year}`,
+      image: records.oldestGame.headerImage,
+    },
+    records.newestGame && {
+      label: "Freshest game",
+      title: records.newestGame.name,
+      detail: `Released in ${records.newestGame.year}`,
+      image: records.newestGame.headerImage,
+    },
+    records.mostRecentGame && {
+      label: "Last seen",
+      title: records.mostRecentGame.name,
+      detail: records.mostRecentGame.lastPlayed,
+      image: records.mostRecentGame.headerImage,
+    },
+    records.mostExpensiveBacklog && {
+      label: "Backlog guilt",
+      title: records.mostExpensiveBacklog.name,
+      detail: `~${records.mostExpensiveBacklog.price.toLocaleString(LOCALE)} sitting untouched`,
+      image: records.mostExpensiveBacklog.headerImage,
+    },
+  ].filter(Boolean) as {
+    label: string;
+    title: string;
+    detail: string;
+    image?: string;
+  }[];
+
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {tiles.slice(0, 5).map((tile, index) => (
+        <RecordTile key={tile.label} {...tile} index={index} />
+      ))}
+    </div>
+  );
+}
+
 export function MonthlyBars({
   months,
   labels,
