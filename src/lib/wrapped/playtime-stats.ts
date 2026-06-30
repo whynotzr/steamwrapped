@@ -13,8 +13,8 @@ function releaseCategory(
 }
 
 /** Enrichissement Store API — top jeux par playtime */
-export const ENRICH_PLAYED_LIMIT = 100;
-export const ENRICH_UNPLAYED_LIMIT = 20;
+export const ENRICH_PLAYED_LIMIT = 72;
+export const ENRICH_UNPLAYED_LIMIT = 12;
 
 export function playtimeHours(minutes: number): number {
   return Math.round(minutes / 60);

@@ -13,15 +13,16 @@ import type { SteamAchievement, SteamAchievementSchema } from "./types";
 import type { CompletedGameEntry, RareAchievement } from "@/types/wrapped";
 import { buildAchievementIconUrl } from "./achievement-icons";
 
-const SCAN_CONCURRENCY = 14;
-const COMPLETION_SCAN_CONCURRENCY = 14;
+const SCAN_CONCURRENCY = 18;
+const COMPLETION_SCAN_CONCURRENCY = 18;
 const SCHEMA_PREFILTER_CONCURRENCY = 20;
 const SCAN_DELAY_MS = 25;
 const COMPLETION_SCAN_DELAY_MS = 22;
 const SCHEMA_PREFILTER_DELAY_MS = 15;
-const MAX_GAMES_STATS_SCAN = 120;
-const MAX_GAMES_RARE_SCAN = 200;
-const RARE_BATCH = 12;
+const MAX_GAMES_STATS_SCAN = 72;
+const MAX_GAMES_RARE_SCAN = 72;
+const MAX_GAMES_SCHEMA_PREFILTER = 120;
+const RARE_BATCH = 16;
 
 function isAchievementUnlocked(achieved: number | boolean | undefined): boolean {
   return achieved === 1 || achieved === true;
@@ -413,7 +414,9 @@ export async function resolveAchievementTotals(
   const [profileShowcase, progressQuick, schemaAppIds] = await Promise.all([
       getProfileShowcaseStats(steamId),
       scanAllAchievements(steamId, topToScan),
-      filterGamesWithAchievementSchema(ownedAppIds),
+      filterGamesWithAchievementSchema(
+        ownedAppIds.slice(0, MAX_GAMES_SCHEMA_PREFILTER)
+      ),
     ]);
 
   const profileTotal = profileShowcase.totalAchievements;
