@@ -19,9 +19,9 @@ const SCHEMA_PREFILTER_CONCURRENCY = 20;
 const SCAN_DELAY_MS = 25;
 const COMPLETION_SCAN_DELAY_MS = 22;
 const SCHEMA_PREFILTER_DELAY_MS = 15;
-const MAX_GAMES_STATS_SCAN = 72;
-const MAX_GAMES_RARE_SCAN = 72;
-const MAX_GAMES_SCHEMA_PREFILTER = 120;
+const MAX_GAMES_STATS_SCAN = 48;
+const MAX_GAMES_RARE_SCAN = 48;
+const MAX_GAMES_SCHEMA_PREFILTER = 72;
 const RARE_BATCH = 16;
 
 function isAchievementUnlocked(achieved: number | boolean | undefined): boolean {

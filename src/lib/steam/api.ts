@@ -9,8 +9,8 @@ import type {
 
 const STEAM_API = "https://api.steampowered.com";
 const STORE_API = "https://store.steampowered.com/api/appdetails";
-const DEFAULT_TIMEOUT_MS = 12000;
-const MAX_RETRIES = 2;
+const DEFAULT_TIMEOUT_MS = 7000;
+const MAX_RETRIES = 1;
 
 function getApiKey(): string {
   const key = process.env.STEAM_API_KEY;
