@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function SiteHeader() {
@@ -7,8 +8,15 @@ export function SiteHeader() {
         href="/"
         className="group inline-flex items-center gap-2 text-sm font-black tracking-tight text-white transition hover:text-[#66c0f4]"
       >
-        <span className="grid h-8 w-8 place-items-center rounded-lg border border-[#66c0f4]/30 bg-[#66c0f4]/10 text-[#66c0f4] shadow-[0_0_24px_rgba(102,192,244,0.16)]">
-          S
+        <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg border border-[#66c0f4]/30 bg-[#020712] shadow-[0_0_24px_rgba(102,192,244,0.22)]">
+          <Image
+            src="/steamwrapped-logo.png"
+            alt=""
+            width={36}
+            height={36}
+            className="h-full w-full object-cover"
+            priority
+          />
         </span>
         SteamWrapped
       </Link>

@@ -43,29 +43,43 @@ export function FlexCard({ data, shareUrl, exportMode = false }: FlexCardProps) 
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div>
-          <p
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/steamwrapped-logo.png"
+            alt=""
+            width={38}
+            height={38}
             style={{
-              margin: 0,
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "0.35em",
-              textTransform: "uppercase",
-              color: "#5ce1e6",
+              borderRadius: 10,
+              objectFit: "cover",
+              boxShadow: "0 0 22px rgba(92,225,230,0.28)",
             }}
-          >
-            Steam Wrapped
-          </p>
-          <p
-            style={{
-              margin: "2px 0 0",
-              fontSize: 22,
-              fontWeight: 900,
-              color: "#fff",
-            }}
-          >
-            {data.profile.personaName}
-          </p>
+          />
+          <div>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.35em",
+                textTransform: "uppercase",
+                color: "#5ce1e6",
+              }}
+            >
+              Steam Wrapped
+            </p>
+            <p
+              style={{
+                margin: "2px 0 0",
+                fontSize: 22,
+                fontWeight: 900,
+                color: "#fff",
+              }}
+            >
+              {data.profile.personaName}
+            </p>
+          </div>
         </div>
         <div
           style={{
