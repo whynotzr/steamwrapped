@@ -22,18 +22,18 @@ const PREVIEW_GAMES = [
 const FEATURE_ROWS = [
   {
     kicker: "01",
-    title: "Your library, ranked",
-    text: "Top games, time sinks, unplayed backlog, oldest games, newest games, and library value.",
+    title: "Steam Wrapped generator",
+    text: "Paste a Steam profile and generate a clean Steam Wrapped recap with top games, time sinks, unplayed backlog, oldest games, newest games, and library value.",
   },
   {
     kicker: "02",
     title: "Achievements with bite",
-    text: "Total unlocks, perfect games, rarest achievements, and enough context to actually flex.",
+    text: "Total unlocks, perfect games, rarest achievements, and enough context to make your Steam stats worth sharing.",
   },
   {
     kicker: "03",
-    title: "Made to share",
-    text: "Animated replay first, clean PNG card at the end, and a link your friends can open.",
+    title: "Leaderboard ready",
+    text: "Publish your Steam Wrapped card, compare total hours, games, profile level, views, and help build the global SteamWrapped statistics.",
   },
 ];
 
@@ -235,6 +235,22 @@ export function LandingPage({ hasError }: { hasError?: boolean }) {
               </article>
             ))}
           </div>
+
+          <section className="mt-6 rounded-lg border border-white/[0.08] bg-[#07111f]/64 p-5 backdrop-blur-xl sm:p-6">
+            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#ffc857]">
+              Steam stats recap
+            </p>
+            <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">
+              A Steam Wrapped for your profile, your friends, and the leaderboard.
+            </h2>
+            <p className="mt-3 max-w-4xl text-sm leading-7 text-white/58 sm:text-base">
+              SteamWrapped turns public Steam profile data into a fast gaming
+              recap: lifetime hours, most played games, achievement records,
+              recent activity, profile views, Steam level, global statistics,
+              and a shareable card built for search, screenshots, and bragging
+              rights.
+            </p>
+          </section>
 
           <div className="mt-10 grid gap-3 md:grid-cols-3">
             {FAQ_ITEMS.map((item) => (

@@ -8,6 +8,12 @@ export function SiteFooter() {
         stats via Steam Web API.
       </p>
       <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px]">
+        <Link
+          href="/steam-wrapped"
+          className="text-[#66c0f4]/70 hover:text-[#66c0f4]"
+        >
+          Steam Wrapped generator
+        </Link>
         <Link href="/u/demo" className="text-[#66c0f4]/70 hover:text-[#66c0f4]">
           Try the demo
         </Link>

@@ -23,11 +23,11 @@ export const metadata: Metadata = {
       }
     : {}),
   title: {
-    default: "Steam Wrapped - Your gaming life, exposed",
+    default: "Steam Wrapped - Steam stats recap and leaderboard",
     template: "%s | SteamWrapped",
   },
   description:
-    "Create your Steam Wrapped in one click: lifetime Steam stats, top games, gaming archetype, achievements, and a shareable PNG card.",
+    "Create your Steam Wrapped in one click: lifetime Steam stats, top games, achievements, rare unlocks, gaming leaderboard, and a shareable PNG recap card.",
   keywords: [
     "Steam Wrapped",
     "SteamWrapped",
@@ -35,6 +35,8 @@ export const metadata: Metadata = {
     "Steam recap",
     "gaming wrapped",
     "Steam profile stats",
+    "Steam Wrapped generator",
+    "Steam Wrapped leaderboard",
   ],
   alternates: {
     canonical: "/",
@@ -52,15 +54,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "SteamWrapped",
-    title: "Steam Wrapped - Your gaming life, exposed",
+    title: "Steam Wrapped - Steam stats recap and leaderboard",
     description:
-      "Create Spotify Wrapped-style Steam slides. Paste your SteamID64 or profile URL.",
+      "Create a Steam Wrapped recap from your Steam profile with lifetime stats, top games, achievements, leaderboards, and a shareable card.",
     locale: "en_US",
+    url: "/",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Steam Wrapped profile recap",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Steam Wrapped",
-    description: "Create your Steam gaming recap in animated slides.",
+    title: "Steam Wrapped - Steam stats recap",
+    description:
+      "Create your Steam Wrapped and compare your Steam stats on the leaderboard.",
+    images: ["/opengraph-image"],
   },
 };
 

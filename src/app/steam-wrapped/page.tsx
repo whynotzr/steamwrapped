@@ -5,20 +5,22 @@ import { getSiteUrl } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Steam Wrapped - Generate your Steam stats recap",
   description:
-    "Generate a Steam Wrapped recap from your Steam profile with lifetime playtime, top games, achievements, rare unlocks, and a shareable card.",
+    "Generate a Steam Wrapped recap from your Steam profile with lifetime playtime, top games, achievements, rare unlocks, leaderboard rankings, and a shareable card.",
   alternates: {
     canonical: "/steam-wrapped",
   },
   openGraph: {
     title: "Steam Wrapped - Generate your Steam stats recap",
     description:
-      "Create animated Steam Wrapped slides from your public Steam profile.",
+      "Create animated Steam Wrapped slides from your public Steam profile and compare your stats on the leaderboard.",
     url: "/steam-wrapped",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Steam Wrapped",
     description:
       "Generate your Steam Wrapped recap from your Steam profile.",
+    images: ["/opengraph-image"],
   },
 };
 
@@ -28,7 +30,7 @@ const jsonLd = {
   name: "Steam Wrapped",
   url: `${getSiteUrl()}/steam-wrapped`,
   description:
-    "Generate a Steam Wrapped recap from your Steam profile with lifetime Steam stats, top games, achievements, and a shareable card.",
+    "Generate a Steam Wrapped recap from your Steam profile with lifetime Steam stats, top games, achievements, leaderboard rankings, and a shareable card.",
   isPartOf: {
     "@type": "WebSite",
     name: "SteamWrapped",

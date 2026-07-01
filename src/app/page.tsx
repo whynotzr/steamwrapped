@@ -3,22 +3,24 @@ import { LandingPage } from "@/components/home/LandingPage";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Steam Wrapped - Create your Steam gaming recap",
+  title: "Steam Wrapped - Create your Steam stats recap",
   description:
-    "Create your Steam Wrapped from your Steam profile. See lifetime Steam stats, top games, achievements, rare unlocks, and a shareable recap card.",
+    "Create your Steam Wrapped from your Steam profile. See lifetime Steam stats, top games, achievements, rare unlocks, leaderboard rankings, and a shareable recap card.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Steam Wrapped - Create your Steam gaming recap",
+    title: "Steam Wrapped - Create your Steam stats recap",
     description:
-      "Paste your Steam profile and generate animated Steam Wrapped slides with lifetime stats, top games, achievements, and a shareable card.",
+      "Paste your Steam profile and generate animated Steam Wrapped slides with lifetime stats, top games, achievements, leaderboards, and a shareable card.",
     url: "/",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Steam Wrapped",
     description:
       "Create your Steam Wrapped from your Steam profile and share your gaming recap.",
+    images: ["/opengraph-image"],
   },
 };
 
@@ -59,10 +61,22 @@ const webApplicationJsonLd = {
   name: "Steam Wrapped",
   alternateName: "SteamWrapped",
   url: getSiteUrl(),
+  sameAs: [`${getSiteUrl()}/steam-wrapped`],
   applicationCategory: "EntertainmentApplication",
   operatingSystem: "Web",
   description:
-    "Create your Steam Wrapped from your Steam profile with lifetime Steam stats, top games, achievements, and a shareable recap card.",
+    "Create your Steam Wrapped from your Steam profile with lifetime Steam stats, top games, achievements, leaderboard rankings, and a shareable recap card.",
+};
+
+const webSiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Steam Wrapped",
+  alternateName: "SteamWrapped",
+  url: getSiteUrl(),
+  inLanguage: "en",
+  description:
+    "Steam Wrapped is a Steam stats recap generator with profile cards, leaderboards, and global community statistics.",
 };
 
 export default async function Home({
@@ -81,6 +95,12 @@ export default async function Home({
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(webApplicationJsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webSiteJsonLd),
         }}
       />
       <LandingPage hasError={params.error === "auth_failed"} />
