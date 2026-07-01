@@ -13,12 +13,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const googleSiteVerifications = Array.from(
+  new Set(
+    [
+      process.env.GOOGLE_SITE_VERIFICATION,
+      "mVok42bd5JDio7rOgDoHgMwA-3JWPSlTHUG5E7_VC8I",
+    ].filter(Boolean),
+  ),
+) as string[];
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  ...(process.env.GOOGLE_SITE_VERIFICATION
+  ...(googleSiteVerifications.length > 0
     ? {
         verification: {
-          google: process.env.GOOGLE_SITE_VERIFICATION,
+          google: googleSiteVerifications,
         },
       }
     : {}),
