@@ -22,6 +22,18 @@ export function SiteHeader() {
       </Link>
       <div className="flex items-center gap-2">
         <Link
+          href="/leaderboard"
+          className="hidden rounded-full border border-white/10 px-3 py-1.5 text-[11px] font-bold text-white/65 transition hover:border-[#5ce1e6]/35 hover:text-[#5ce1e6] sm:inline-flex"
+        >
+          Leaderboard
+        </Link>
+        <Link
+          href="/statistics"
+          className="hidden rounded-full border border-white/10 px-3 py-1.5 text-[11px] font-bold text-white/65 transition hover:border-[#5ce1e6]/35 hover:text-[#5ce1e6] sm:inline-flex"
+        >
+          Stats
+        </Link>
+        <Link
           href="/u/demo"
           className="rounded-full border border-white/10 px-3 py-1.5 text-[11px] font-bold text-white/65 transition hover:border-[#5ce1e6]/35 hover:text-[#5ce1e6]"
         >

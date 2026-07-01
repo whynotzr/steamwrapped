@@ -11,6 +11,18 @@ export function SiteFooter() {
         <Link href="/u/demo" className="text-[#66c0f4]/70 hover:text-[#66c0f4]">
           Try the demo
         </Link>
+        <Link
+          href="/leaderboard"
+          className="text-[#66c0f4]/70 hover:text-[#66c0f4]"
+        >
+          Leaderboard
+        </Link>
+        <Link
+          href="/statistics"
+          className="text-[#66c0f4]/70 hover:text-[#66c0f4]"
+        >
+          Statistics
+        </Link>
         <a
           href="https://steamcommunity.com/dev/apikey"
           target="_blank"
