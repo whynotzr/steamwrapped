@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LOCALE } from "@/lib/locale";
@@ -83,6 +86,31 @@ const STAT_CARDS = [
       snapshot.totals.averageSteamLevel.toLocaleString(LOCALE),
   },
 ];
+
+export function LeaderboardLivePage({
+  initialSnapshot,
+  mode,
+}: {
+  initialSnapshot: LeaderboardSnapshot;
+  mode: "leaderboard" | "statistics";
+}) {
+  const [snapshot, setSnapshot] = useState(initialSnapshot);
+
+  useEffect(() => {
+    fetch("/api/leaderboard")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: LeaderboardSnapshot | null) => {
+        if (data) setSnapshot(data);
+      })
+      .catch(() => undefined);
+  }, []);
+
+  return mode === "leaderboard" ? (
+    <LeaderboardPageView snapshot={snapshot} />
+  ) : (
+    <StatisticsPageView snapshot={snapshot} />
+  );
+}
 
 function EmptyState() {
   return (

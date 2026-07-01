@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StatisticsPageView } from "@/components/leaderboard/LeaderboardViews";
+import { LeaderboardLivePage } from "@/components/leaderboard/LeaderboardViews";
 import { getLeaderboardSnapshot } from "@/lib/leaderboard/store";
 
 export const dynamic = "force-dynamic";
@@ -21,5 +21,5 @@ export const metadata: Metadata = {
 
 export default async function StatisticsPage() {
   const snapshot = await getLeaderboardSnapshot();
-  return <StatisticsPageView snapshot={snapshot} />;
+  return <LeaderboardLivePage initialSnapshot={snapshot} mode="statistics" />;
 }

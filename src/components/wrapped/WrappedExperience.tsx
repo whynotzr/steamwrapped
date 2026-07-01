@@ -140,6 +140,11 @@ export function WrappedExperience({ steamId }: WrappedExperienceProps) {
         })
         .then((payload: WrappedData) => {
           setData(payload);
+          void fetch("/api/leaderboard", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: payload }),
+          }).catch(() => undefined);
         })
         .catch((e: Error) => setError(e.message))
         .finally(() => setLoading(false));
