@@ -5,6 +5,12 @@ import type { WrappedData } from "@/types/wrapped";
 
 const STORE_DIR = path.join(os.tmpdir(), "steamwrapped-cache");
 const STORE_FILE = path.join(STORE_DIR, "leaderboard.json");
+const KV_KEY = "steamwrapped:leaderboard:v1";
+
+interface RedisResponse<T> {
+  result?: T;
+  error?: string;
+}
 
 export interface LeaderboardEntry {
   steamId: string;
@@ -48,7 +54,38 @@ function emptyStore(): StoreFile {
   return { entries: {} };
 }
 
-async function readStore(): Promise<StoreFile> {
+function getKvConfig() {
+  const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
+  const token =
+    process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+  return url && token ? { url, token } : null;
+}
+
+async function kvCommand<T>(command: unknown[]): Promise<T | null> {
+  const config = getKvConfig();
+  if (!config) return null;
+
+  try {
+    const res = await fetch(config.url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${config.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(command),
+      cache: "no-store",
+    });
+
+    if (!res.ok) return null;
+    const body = (await res.json()) as RedisResponse<T>;
+    if (body.error) return null;
+    return body.result ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function readLocalStore(): Promise<StoreFile> {
   try {
     const raw = await readFile(STORE_FILE, "utf-8");
     const parsed = JSON.parse(raw) as StoreFile;
@@ -58,13 +95,33 @@ async function readStore(): Promise<StoreFile> {
   }
 }
 
-async function writeStore(store: StoreFile): Promise<void> {
+async function writeLocalStore(store: StoreFile): Promise<void> {
   try {
     await mkdir(STORE_DIR, { recursive: true });
     await writeFile(STORE_FILE, JSON.stringify(store), "utf-8");
   } catch {
-    // Leaderboard writes are best-effort until a durable database is attached.
+    // Local fallback writes are best-effort on serverless runtimes.
   }
+}
+
+async function readStore(): Promise<StoreFile> {
+  const raw = await kvCommand<string>(["GET", KV_KEY]);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw) as StoreFile;
+      return parsed.entries ? parsed : emptyStore();
+    } catch {
+      return emptyStore();
+    }
+  }
+
+  return readLocalStore();
+}
+
+async function writeStore(store: StoreFile): Promise<void> {
+  const saved = await kvCommand<"OK">(["SET", KV_KEY, JSON.stringify(store)]);
+  if (saved === "OK") return;
+  await writeLocalStore(store);
 }
 
 function byNumber(

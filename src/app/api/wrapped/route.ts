@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { resolveSteamId } from "@/lib/steam/resolve";
 import { getWrapped } from "@/lib/wrapped/get-wrapped";
 import { getSession } from "@/lib/session";
-import { recordLeaderboardEntry } from "@/lib/leaderboard/store";
 
 export const maxDuration = 300;
 
@@ -33,7 +32,6 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getWrapped(steamId, { skipCache: refresh });
-    await recordLeaderboardEntry(data, { countView: true });
     return NextResponse.json(data);
   } catch (error) {
     const message =
